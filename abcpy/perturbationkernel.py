@@ -263,7 +263,7 @@ class MultivariateNormalKernel(PerturbationKernel, ContinuousKernel):
                             range(len(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index]))]
         for i in range(len(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index])):
             if isinstance(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][i][0],
-                          (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                          (float, np.float32, np.float64, int, np.int32, np.int64)):
                 continuous_model[i] = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][i]
             else:
                 continuous_model[i] = np.concatenate(
@@ -302,7 +302,7 @@ class MultivariateNormalKernel(PerturbationKernel, ContinuousKernel):
         continuous_model_values = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index]
 
         if isinstance(continuous_model_values[row_index][0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             # Perturb
             cov = np.array(accepted_parameters_manager.accepted_cov_mats_bds.value()[kernel_index]).astype(float)
             continuous_model_values = np.array(continuous_model_values).astype(float)
@@ -347,7 +347,7 @@ class MultivariateNormalKernel(PerturbationKernel, ContinuousKernel):
             The pdf evaluated at point x.
         """
 
-        if isinstance(mean[0], (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+        if isinstance(mean[0], (float, np.float32, np.float64, int, np.int32, np.int64)):
             mean = np.array(mean).astype(float)
             cov = np.array(accepted_parameters_manager.accepted_cov_mats_bds.value()[kernel_index]).astype(float)
             return multivariate_normal(mean, cov, allow_singular=True).pdf(np.array(x).astype(float))
@@ -392,7 +392,7 @@ class MultivariateStudentTKernel(PerturbationKernel, ContinuousKernel):
                             range(len(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index]))]
         for i in range(len(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index])):
             if isinstance(accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][i][0],
-                          (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                          (float, np.float32, np.float64, int, np.int32, np.int64)):
                 continuous_model[i] = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][i]
             else:
                 continuous_model[i] = np.concatenate(
@@ -432,7 +432,7 @@ class MultivariateStudentTKernel(PerturbationKernel, ContinuousKernel):
         continuous_model_values = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][row_index]
 
         if isinstance(continuous_model_values[0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             # Perturb
             continuous_model_values = np.array(continuous_model_values)
             cov = np.array(accepted_parameters_manager.accepted_cov_mats_bds.value()[kernel_index]).astype(float)
@@ -493,7 +493,7 @@ class MultivariateStudentTKernel(PerturbationKernel, ContinuousKernel):
         """
 
         if isinstance(mean[0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             mean = np.array(mean).astype(float)
             cov = np.array(accepted_parameters_manager.accepted_cov_mats_bds.value()[kernel_index]).astype(float)
 
@@ -563,7 +563,7 @@ class RandomWalkKernel(PerturbationKernel, DiscreteKernel):
         discrete_model_values = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][row_index]
 
         if isinstance(discrete_model_values[0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             # Perturb
             discrete_model_values = np.array(discrete_model_values)
             perturbed_discrete_values = []
@@ -673,7 +673,7 @@ class NetworkRandomWalkKernel(PerturbationKernel, DiscreteKernel):
         discrete_model_values = accepted_parameters_manager.kernel_parameters_bds.value()[kernel_index][row_index]
 
         if isinstance(discrete_model_values[0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             # Perturb
             discrete_model_values = np.array(discrete_model_values)
             perturbed_discrete_values = []
@@ -740,7 +740,7 @@ class NetworkRandomWalkKernel(PerturbationKernel, DiscreteKernel):
         """
         density = 1
         if isinstance(mean[0],
-                      (np.float, np.float32, np.float64, np.int, np.int32, np.int64)):
+                      (float, np.float32, np.float64, int, np.int32, np.int64)):
             mean = np.array(mean).astype(int)
             for ind1 in range(len(mean)):
                 discrete_value = mean[ind1]
