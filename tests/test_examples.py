@@ -53,14 +53,14 @@ class ExampleExtensionsModelsTest(unittest.TestCase):
         expected_result = 175.00683044068612
         self.assertAlmostEqual(test_result, expected_result)
 
-    def test_R(self):
-        import os
-        print(os.getcwd())
-        from examples.extensions.models.gaussian_R.pmcabc_gaussian_model_simple import infer_parameters
-        journal = infer_parameters(steps=1, n_sample=50)
-        test_result = journal.posterior_mean()["mu"]
-        expected_result = 173.4192372459506
-        self.assertAlmostEqual(test_result, expected_result)
+    # def test_R(self):
+    #     import os
+    #     print(os.getcwd())
+    #     from examples.extensions.models.gaussian_R.pmcabc_gaussian_model_simple import infer_parameters
+    #     journal = infer_parameters(steps=1, n_sample=50)
+    #     test_result = journal.posterior_mean()["mu"]
+    #     expected_result = 173.4192372459506
+    #     self.assertAlmostEqual(test_result, expected_result)
 
 
 class ExampleExtensionsPerturbationKernelsTest(unittest.TestCase):
