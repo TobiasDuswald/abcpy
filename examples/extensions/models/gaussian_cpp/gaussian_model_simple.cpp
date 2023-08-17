@@ -1,32 +1,31 @@
 #include <iostream>
-#include <boost/random.hpp>
-#include <boost/random/normal_distribution.hpp>
+#include <random>
 
 using namespace std;
 
-
 // Simulation function of the gaussian model
 void gaussian_model(double* result, unsigned int k, double mu, double sigma, int seed) {
-  boost::mt19937 rng(seed);
-  boost::normal_distribution<> nd(mu, sigma);
-  boost::variate_generator<boost::mt19937, boost::normal_distribution<> > sampler(rng, nd);
-  
-  for (int i=0; i<k; ++i) {
-    result[i] = sampler();
+  std::mt19937 generator(static_cast<long unsigned int>(time(0)));
+  std::normal_distribution<double> distribution(mu, sigma);
+
+  for (int i = 0; i < k; ++i)
+  {
+    result[i] = distribution(generator);
   }
 }
 
-
 // main function to run the simulation of the Gaussian model
-int main() {
+int main()
+{
   int k = 10;
   double samples[k];
-  gaussian_model(samples, 0.0, 1.0, k, 1);
-  
-  for (int i=0; i<k; ++i) {
+  gaussian_model(samples, k, 0.0, 1.0, 1);
+
+  for (int i = 0; i < k; ++i)
+  {
     std::cout << samples[i] << " ";
     std::cout << std::endl;
   }
-  
+
   return 0;
 }

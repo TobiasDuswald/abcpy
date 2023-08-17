@@ -3,8 +3,7 @@
   #define SWIG_FILE_WITH_INIT
   
   #include <iostream>
-  #include <boost/random.hpp>
-  #include <boost/random/normal_distribution.hpp>
+  #include <random>
   
   extern void gaussian_model(double* result, unsigned int k, double mu, double sigma, int seed);
 %}
