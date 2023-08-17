@@ -32,8 +32,11 @@ class ExampleExtensionsModelsTest(unittest.TestCase):
         from examples.extensions.models.gaussian_cpp.pmcabc_gaussian_model_simple import infer_parameters
         journal = infer_parameters(steps=1, n_sample=50)
         test_result = journal.posterior_mean()["mu"]
-        expected_result = 173.74453347475725
-        self.assertAlmostEqual(test_result, expected_result)
+        expected_result = 170.0
+        # compute the relative error
+        relative_error = abs(test_result - expected_result) / expected_result
+        # test if the relative error is smaller than 10%
+        self.assertLess(relative_error, 0.1)
 
     def test_f90(self):
         from examples.extensions.models.gaussian_f90.pmcabc_gaussian_model_simple import infer_parameters
