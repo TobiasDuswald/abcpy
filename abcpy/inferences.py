@@ -20,6 +20,11 @@ from abcpy.probabilisticmodels import *
 from abcpy.utils import cached
 from abcpy.transformers import BoundedVarTransformer, DummyTransformer
 
+def get_current_time():
+    """
+    Helper function to get the current time in the format HH:MM:SS
+    """
+    return time.strftime("%H:%M:%S")
 
 class InferenceMethod(GraphTools, metaclass=ABCMeta):
     """
@@ -3272,7 +3277,7 @@ class SMCABC(BaseDiscrepancy, InferenceMethod):
 
     def sample(self, observations, steps, n_samples=10000, n_samples_per_param=1, epsilon_final=0.1, alpha=None,
                covFactor=2, resample=None, full_output=0, which_mcmc_kernel=None, r=None,
-               store_simulations_in_journal=True, journal_file=None, path_to_save_journal=None):
+               store_simulations_in_journal=True, journal_file=None, path_to_save_journal=None, max_sim=None):
         """Samples from the posterior distribution of the model parameter given the observed
         data observations.
 
@@ -3333,6 +3338,9 @@ class SMCABC(BaseDiscrepancy, InferenceMethod):
             of the sequential inference routine, so that partial results are stored to the disk in case the
             inference routine does not end correctly; recall that you need to set full_output=1 to obtain the
             full partial results.
+        max_sim: integer, optional
+            Maximum number of simulations to be performed. If not provided, the inference routine will continue until
+            epsilon_final is reached. The default value is None.
 
         Returns
         -------
@@ -3405,6 +3413,12 @@ class SMCABC(BaseDiscrepancy, InferenceMethod):
         # main SMC ABC algorithm
         for aStep in range(0, steps):
             self.logger.info("SMCABC iteration {}".format(aStep))
+            self.logger.info(" -> Time: {}".format(get_current_time()))
+
+            self.logger.info("Performed simulations: {}".format(self.simulation_counter))
+            if max_sim is not None and self.simulation_counter >= max_sim:
+                self.logger.info("Maximum number of simulations reached. Exiting.")
+                break
 
             if aStep == 0 and journal_file is not None:
                 accepted_parameters = journal.get_accepted_parameters(-1)
